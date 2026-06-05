@@ -106,9 +106,9 @@ test('门迫：门克宫记为门迫', () => {
 });
 
 test('空亡令吉凶力量减半', () => {
-    // 生门(吉)入坎水：宫生门，本应有正分
-    const normal = jd.analyzeGongDeep('1', basePan({ baMen: { '1': '生门' }, baShen: { '1': '值符' } }));
-    const empty = jd.analyzeGongDeep('1', basePan({ baMen: { '1': '生门' }, baShen: { '1': '值符' }, kongWangGong: ['1'] }));
+    // 开门(金)入坎水(金生水,门生宫)+ 值符(吉神)：本应有正分
+    const normal = jd.analyzeGongDeep('1', basePan({ baMen: { '1': '开门' }, baShen: { '1': '值符' } }));
+    const empty = jd.analyzeGongDeep('1', basePan({ baMen: { '1': '开门' }, baShen: { '1': '值符' }, kongWangGong: ['1'] }));
     assert.ok(normal.score > 0);
     assert.equal(empty.score, normal.score * 0.5);
     assert.equal(empty.kongWang, true);
