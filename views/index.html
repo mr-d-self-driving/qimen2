@@ -330,6 +330,31 @@
 
         <div class="row">
             <div class="col-md-12">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">格局</h3>
+                    </div>
+                    <div class="panel-body">
+                        <% if (qimen.geju && Array.isArray(qimen.geju) && qimen.geju.length) { %>
+                        <ul class="geju-list">
+                            <% qimen.geju.forEach(function(g) { %>
+                                <li>
+                                    <span class="label label-<%= g.jiXiong === 'ji' ? 'success' : g.jiXiong === 'xiong' ? 'danger' : 'default' %>"><%= g.jiXiong === 'ji' ? '吉' : g.jiXiong === 'xiong' ? '凶' : '平' %></span>
+                                    <strong><%= g.name %></strong><% if (g.gong) { %>（<%= g.gong %>宫）<% } %>
+                                    — <%= g.explain %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                        <% } else { %>
+                        <p>本盘未见显著格局。</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">九宫详解</h3>
@@ -357,7 +382,15 @@
                                             <% if (qimen.jiuGongAnalysis[i].shen) { %>
                                                 <strong>八神:</strong> <%= qimen.jiuGongAnalysis[i].shen %></p>
                                             <% } %>
-                                            <p><strong>三奇六仪:</strong> <%= qimen.sanQiLiuYi && qimen.sanQiLiuYi[i] || '' %></p>
+                                            <p><strong>天盘:</strong> <%= qimen.jiuGongAnalysis[i].tianGan || '' %>
+                                            <strong>地盘:</strong> <%= qimen.jiuGongAnalysis[i].diGan || '' %>
+                                            <% if (qimen.jiuGongAnalysis[i].anGan) { %><strong>暗干:</strong> <%= qimen.jiuGongAnalysis[i].anGan %><% } %></p>
+                                            <p>
+                                                <% if (qimen.jiuGongAnalysis[i].keYing) { %><span class="label label-<%= qimen.jiuGongAnalysis[i].keYing.jiXiong === 'ji' ? 'success' : qimen.jiuGongAnalysis[i].keYing.jiXiong === 'xiong' ? 'danger' : 'default' %>"><%= qimen.jiuGongAnalysis[i].keYing.name %></span> <% } %>
+                                                <% if (qimen.jiuGongAnalysis[i].menPo) { %><span class="label label-danger">门迫</span> <% } %>
+                                                <% if (qimen.jiuGongAnalysis[i].kongWang) { %><span class="label label-default">空亡</span> <% } %>
+                                                <% if (qimen.jiuGongAnalysis[i].yiMa) { %><span class="label label-info">驿马</span> <% } %>
+                                            </p>
                                             <p class="gong-explain"><%= qimen.jiuGongAnalysis[i].explain || '暂无解释' %></p>
                                         </div>
                                     </div>
