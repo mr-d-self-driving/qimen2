@@ -73,3 +73,24 @@ test('伏吟盘天盘=地盘', () => {
         assert.equal(pan.tianPan[i], pan.diPan[i], `第${i}宫天盘应等于地盘`);
     }
 });
+
+/* 五张权威 App 基准盘（2026 各节气，午时 12:00，置闰法）
+ * 校验：局数/阴阳遁 + 值符星 + 值符落宫 + 值使门 + 值使落宫(中5寄坤2) */
+const BENCH = [
+    { date: '2026-03-21T12:00:00', type: 'yang', num: '3', xing: '天冲', zhiFu: '2', shiMen: '伤门', zhiShi: '9' },
+    { date: '2026-06-09T12:00:00', type: 'yang', num: '3', xing: '天冲', zhiFu: '2', shiMen: '伤门', zhiShi: '9' },
+    { date: '2026-07-15T12:00:00', type: 'yin', num: '5', xing: '天辅', zhiFu: '1', shiMen: '杜门', zhiShi: '2' },
+    { date: '2026-09-23T12:00:00', type: 'yin', num: '1', xing: '天英', zhiFu: '6', shiMen: '景门', zhiShi: '1' },
+    { date: '2026-12-08T12:00:00', type: 'yin', num: '7', xing: '天辅', zhiFu: '4', shiMen: '杜门', zhiShi: '4' }
+];
+for (const b of BENCH) {
+    test(`权威盘 ${b.date.slice(0, 10)} = ${b.type === 'yang' ? '阳' : '阴'}遁${b.num}局`, () => {
+        const p = qimen.calculate(new Date(b.date), { method: '时家' });
+        assert.equal(p.juShu.type, b.type, '阴阳遁');
+        assert.equal(p.juShu.number, b.num, '局数');
+        assert.equal(p.zhiFuXing, b.xing, '值符星');
+        assert.equal(p.zhiFuGong, b.zhiFu, '值符落宫');
+        assert.equal(p.zhiShiMen, b.shiMen, '值使门');
+        assert.equal(p.zhiShiGong, b.zhiShi, '值使落宫');
+    });
+}
