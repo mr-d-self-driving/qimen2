@@ -99,8 +99,8 @@ test('九星伏吟：九星各归本位', () => {
 /* ---------- 宫位级断局 ---------- */
 
 test('门迫：门克宫记为门迫', () => {
-    // 坎一宫(水)，杜门(土) → 土克水 = 门迫
-    const a = jd.analyzeGongDeep('1', basePan({ baMen: { '1': '杜门' } }));
+    // 坎一宫(水)，死门(土) → 土克水 = 门迫
+    const a = jd.analyzeGongDeep('1', basePan({ baMen: { '1': '死门' } }));
     assert.equal(a.menPo, true);
     assert.match(a.explain, /门迫/);
 });
