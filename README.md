@@ -32,6 +32,12 @@ pnpm start
 
 浏览器访问 `http://localhost:3000`
 
+### 测试
+
+```bash
+pnpm test
+```
+
 ## Docker 部署
 
 ```bash
@@ -55,19 +61,26 @@ docker run -p 3000:3000 qimen
 
 ```
 qimen/
-├── app.js              # 应用入口
-├── lib/                # 核心算法
-│   ├── qimen.js        # 奇门排盘主逻辑
-│   ├── bamen.js        # 八门计算
-│   ├── bashen.js       # 八神计算
-│   ├── jiuxing.js      # 九星计算
-│   ├── dipan.js        # 地盘计算
-│   └── constants.js    # 常量定义
-├── views/              # 页面模板
-├── public/             # 静态资源
-│   ├── css/
-│   └── js/
-└── Dockerfile
+├── app.js                      # 应用入口（Express 服务）
+├── lib/                        # 核心算法
+│   ├── qimen.js                # 奇门排盘主逻辑
+│   ├── bamen.js                # 八门计算
+│   ├── bashen.js               # 八神计算
+│   ├── jiuxing.js              # 九星计算
+│   ├── dipan.js                # 地盘计算
+│   ├── jieduan.js              # 节气定局计算
+│   └── constants.js            # 常量定义
+├── views/                      # 页面模板
+│   ├── index.html              # 主页面
+│   ├── standardGongTemplate.ejs # 九宫格模板
+│   └── gongTemplate.html       # 宫格模板
+├── public/                     # 静态资源
+│   ├── css/                    # 样式
+│   └── js/                     # 脚本
+├── test/                       # 单元测试
+│   ├── paipan.test.js          # 排盘基准测试
+│   └── jieduan.test.js         # 节气定局测试
+└── Dockerfile                  # 容器构建
 ```
 
 ## 奇门基础
@@ -99,6 +112,10 @@ qimen/
 5. 排布天盘九星
 6. 排布八门
 7. 排布八神
+
+## 赞助
+
+本项目由 [Voilà Pro](https://voilapro.app/) 赞助支持。
 
 ## 许可证
 
