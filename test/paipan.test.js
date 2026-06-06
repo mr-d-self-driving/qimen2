@@ -74,14 +74,28 @@ test('伏吟盘天盘=地盘', () => {
     }
 });
 
+test('暗干（甲申时，时干甲寄中5起局，旬首六仪庚入中）', () => {
+    const pan = qimen.calculate(new Date('2026-06-05T16:52:00'), { method: '时家' });
+    const ref = { 1: '丙', 2: '乙', 3: '戊', 4: '己', 5: '庚', 6: '辛', 7: '壬', 8: '癸', 9: '丁' };
+    for (let g = 1; g <= 9; g++) {
+        assert.equal(pan.anGan[g], ref[g], `${g}宫暗干`);
+    }
+});
+
 /* 五张权威 App 基准盘（2026 各节气，午时 12:00，置闰法）
- * 校验：局数/阴阳遁 + 值符星 + 值符落宫 + 值使门 + 值使落宫(中5寄坤2) */
+ * 校验：局数/阴阳遁 + 值符星 + 值符落宫 + 值使门 + 值使落宫(中5寄坤2) + 暗干九宫
+ * 暗干：把时干加到值使门落宫，按戊己庚辛壬癸丁丙乙顺序阳顺阴逆排满九宫；时干为甲寄中5起局 */
 const BENCH = [
-    { date: '2026-03-21T12:00:00', type: 'yang', num: '3', xing: '天冲', zhiFu: '2', shiMen: '伤门', zhiShi: '9' },
-    { date: '2026-06-09T12:00:00', type: 'yang', num: '3', xing: '天冲', zhiFu: '2', shiMen: '伤门', zhiShi: '9' },
-    { date: '2026-07-15T12:00:00', type: 'yin', num: '5', xing: '天辅', zhiFu: '1', shiMen: '杜门', zhiShi: '2' },
-    { date: '2026-09-23T12:00:00', type: 'yin', num: '1', xing: '天英', zhiFu: '6', shiMen: '景门', zhiShi: '1' },
-    { date: '2026-12-08T12:00:00', type: 'yin', num: '7', xing: '天辅', zhiFu: '4', shiMen: '杜门', zhiShi: '4' }
+    { date: '2026-03-21T12:00:00', type: 'yang', num: '3', xing: '天冲', zhiFu: '2', shiMen: '伤门', zhiShi: '9',
+      anGan: { 1: '辛', 2: '壬', 3: '癸', 4: '丁', 5: '丙', 6: '乙', 7: '戊', 8: '己', 9: '庚' } },
+    { date: '2026-06-09T12:00:00', type: 'yang', num: '3', xing: '天冲', zhiFu: '2', shiMen: '伤门', zhiShi: '9',
+      anGan: { 1: '辛', 2: '壬', 3: '癸', 4: '丁', 5: '丙', 6: '乙', 7: '戊', 8: '己', 9: '庚' } },
+    { date: '2026-07-15T12:00:00', type: 'yin', num: '5', xing: '天辅', zhiFu: '1', shiMen: '杜门', zhiShi: '2',
+      anGan: { 1: '乙', 2: '丙', 3: '丁', 4: '癸', 5: '壬', 6: '辛', 7: '庚', 8: '己', 9: '戊' } },
+    { date: '2026-09-23T12:00:00', type: 'yin', num: '1', xing: '天英', zhiFu: '6', shiMen: '景门', zhiShi: '1',
+      anGan: { 1: '壬', 2: '辛', 3: '庚', 4: '己', 5: '戊', 6: '乙', 7: '丙', 8: '丁', 9: '癸' } },
+    { date: '2026-12-08T12:00:00', type: 'yin', num: '7', xing: '天辅', zhiFu: '4', shiMen: '杜门', zhiShi: '4',
+      anGan: { 1: '丙', 2: '丁', 3: '癸', 4: '壬', 5: '辛', 6: '庚', 7: '己', 8: '戊', 9: '乙' } }
 ];
 for (const b of BENCH) {
     test(`权威盘 ${b.date.slice(0, 10)} = ${b.type === 'yang' ? '阳' : '阴'}遁${b.num}局`, () => {
@@ -92,5 +106,8 @@ for (const b of BENCH) {
         assert.equal(p.zhiFuGong, b.zhiFu, '值符落宫');
         assert.equal(p.zhiShiMen, b.shiMen, '值使门');
         assert.equal(p.zhiShiGong, b.zhiShi, '值使落宫');
+        for (let g = 1; g <= 9; g++) {
+            assert.equal(p.anGan[g], b.anGan[g], `${g}宫暗干`);
+        }
     });
 }
