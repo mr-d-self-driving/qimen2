@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
     } catch (error) {
         console.error('排盘错误:', error);
         // 返回错误页面
-        res.status(500).send('排盘错误: ' + error.message);
+        res.status(500).send('排盘错误');
     }
 });
 
@@ -123,7 +123,7 @@ app.get('/custom', (req, res) => {
     } catch (error) {
         console.error('自定义排盘错误:', error);
         // 返回错误页面
-        res.status(500).send('排盘错误: ' + error.message);
+        res.status(500).send('排盘错误');
     }
 });
 
